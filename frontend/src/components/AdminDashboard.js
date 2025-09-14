@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_BASE_URL } from '../config/api';
 import './Dashboard.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -37,8 +38,8 @@ const AdminDashboard = () => {
       
       const config = { headers: { Authorization: token } };
       const [plansRes, requestsRes] = await Promise.all([
-        axios.get('/api/plans', config),
-        axios.get('/api/requests', config)
+        axios.get(`${API_BASE_URL}/plans`, config),
+        axios.get(`${API_BASE_URL}/requests`, config)
       ]);
       setPlans(plansRes.data);
       setRequests(requestsRes.data);
@@ -175,7 +176,7 @@ const AdminDashboard = () => {
         return;
       }
       
-      await axios.put(`/api/requests/${requestId}/status`, { status: newStatus }, {
+      await axios.put(`${API_BASE_URL}/requests/${requestId}/status`, { status: newStatus }, {
         headers: { Authorization: token }
       });
       
